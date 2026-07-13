@@ -1,4 +1,4 @@
-# Zen Browser Catppuccin Macchiato ✨
+# Better Zen Browser ✨
 
 [![Zen Browser](https://img.shields.io/badge/Zen%20Browser-1.8%2B-ff5f57?style=flat-square&logo=firefox&logoColor=white)](https://zen-browser.app)
 [![Catppuccin](https://img.shields.io/badge/Catppuccin-Macchiato-f4f4f7?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNOCAxYy0zLjkgMC03IDMuMS03IDdzMy4xIDcgNyA3IDctMy4xIDctNy0zLjEtNy03LTd6IiBmaWxsPSIjZjRjYjcwIi8+PC9zdmc+&labelColor=24273a)](https://catppuccin.com)
