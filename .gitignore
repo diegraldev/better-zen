@@ -1,0 +1,7 @@
+*
+!/.gitignore
+!/README.md
+!/userChrome.css
+!/zen-themes.css
+!/zen-themes/
+!/zen-themes/**/*

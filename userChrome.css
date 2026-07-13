@@ -1,0 +1,591 @@
+/* ==========================================================================
+ * ZEN BROWSER — CONFIGURACIÓN GENERAL UNIFICADA
+ * ========================================================================== */
+
+@-moz-document url-prefix("chrome:") {
+
+    :root {
+    --floating-urlbar-width: clamp(300px, 44vw, 640px);
+    --floating-bookmarks-top: clamp(140px, 30vh, 320px);
+    --floating-bookmarks-height: 36px;
+    --floating-stack-gap: clamp(0px, 0.1vh, 2px);
+    --floating-urlbar-top: calc(var(--floating-bookmarks-top) + var(--floating-bookmarks-height) + var(--floating-stack-gap));
+    --floating-bookmarks-max-width: min(92vw, 760px);
+    }
+
+    #urlbar[zen-floating-urlbar],
+    #urlbar[focused="true"] {
+    --toolbar-field-background-color: transparent !important;
+    --toolbar-field-focus-background-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: fixed !important;
+    inset-inline-start: 50% !important;
+    translate: -50% 0 !important;
+    transform: none !important;
+    top: 0 !important;
+    inset-block-start: 0 !important;
+    margin-top: var(--floating-urlbar-top) !important;
+    margin-bottom: 0 !important;
+    margin-inline: 0 !important;
+    width: min(44vw, 640px, calc(100vw - 32px)) !important;
+    max-width: min(44vw, 640px, calc(100vw - 32px)) !important;
+    display: block !important;
+    padding-inline: 0 !important;
+    box-sizing: border-box !important;
+    min-width: 300px !important;
+    z-index: 999999 !important;
+    }
+
+    :root:has(#urlbar[zen-floating-urlbar]) {
+    --urlbar-margin-inline: 0px !important;
+    }
+
+    #main-window:has(#urlbar[zen-floating-urlbar]) #zen-appcontent-wrapper,
+    #main-window:has(#urlbar[zen-floating-urlbar]) #nav-bar-customization-target,
+    #main-window:has(#urlbar[zen-floating-urlbar]) #zen-appcontent-navbar-container {
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+    inset-inline-start: 0 !important;
+    inset-inline-end: 0 !important;
+    }
+
+    #main-window:has(#urlbar[zen-floating-urlbar]) #nav-bar {
+    position: relative !important;
+    left: calc(-1 * var(--zen-sidebar-width)) !important;
+    }
+
+    #main-window:has(#urlbar[zen-floating-urlbar]) #urlbar-container {
+    min-height: var(--urlbar-min-height) !important;
+    min-width: 50px !important;
+    }
+
+    #urlbar[zen-floating-urlbar] > #urlbar-background,
+    #urlbar[zen-floating-urlbar] > .urlbar-background,
+    #urlbar[zen-floating-urlbar] > .urlbar-input-container,
+    #urlbar[focused="true"] > #urlbar-background,
+    #urlbar[focused="true"] > .urlbar-background,
+    #urlbar[focused="true"] > .urlbar-input-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    }
+
+    /* --- BARRA DE URL FLOTANTE: TRANSPARENCIA --- */
+    #urlbar[zen-floating-urlbar] .urlbar-background,
+    #urlbar[focused="true"] .urlbar-background {
+    background-color: rgba(20, 20, 25, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out !important;
+    }
+
+    /* --- PANEL DE RESULTADOS DEL BUSCADOR --- */
+    #urlbar[zen-floating-urlbar] .urlbarView,
+    #urlbar[focused="true"] .urlbarView {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    /* Fila seleccionada en los resultados */
+    #urlbar[zen-floating-urlbar] .urlbarView-row[selected],
+    #urlbar[focused="true"] .urlbarView-row[selected] {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    }
+
+    /* --- ALINEACIÓN DEL TEXTO EN URL --- */
+    #urlbar:not([zen-floating-urlbar]):not([focused="true"]) .urlbar-input-box > #urlbar-input {
+    text-align: center !important;
+    }
+
+    #urlbar[zen-floating-urlbar] .urlbar-input-box > #urlbar-input,
+    #urlbar[focused="true"] .urlbar-input-box > #urlbar-input {
+    text-align: left !important;
+    }
+
+    /* --- ELEMENTOS DEL WORKSPACE OCULTOS --- */
+    vbox.zen-workspace-tabs-section.zen-current-workspace-indicator,
+    #zen-current-workspace-indicator,
+    #zen-current-workspace-indicator-container,
+    .zen-current-workspace-indicator {
+        display: none !important;
+    }
+
+
+    /* ==========================================================================
+     * SYSTEM — MARCADORES FLOTANTES (CORRECCIÓN DE BUG DE HOVER Y OVERFLOW)
+     * ========================================================================== */
+
+    /* ELIMINACIÓN TOTAL DEL CHEVRON (La flecha del bug ">>") */
+    #PlacesChevron,
+    #PersonalToolbar #PlacesChevron,
+    .chevron,
+    #PlacesToolbarItems + label {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    max-width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    }
+
+    /* Limpieza total y bloqueo de scroll interno */
+    #PlacesToolbarItems,
+    #PersonalToolbar scrollbox {
+    justify-content: center !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+    pointer-events: auto !important;
+    overflow: visible !important; /* Evita que recalcule scrollbar invisible */
+    }
+
+    /* Botones de marcadores y Carpetas base */
+    .bookmark-item,
+    #PlacesToolbarItems .bookmark-item[container="true"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    transition: transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 140ms ease !important;
+    transform-origin: center !important;
+    }
+
+    /* MICROINTERACCIÓN: Escalado al 20% y Brillo en Hover */
+    .bookmark-item:hover,
+    #PlacesToolbarItems .bookmark-item[container="true"]:hover {
+    transform: scale(1.20) !important;
+    filter: brightness(1.4) drop-shadow(0 3px 6px rgba(0,0,0,0.3)) !important;
+    }
+
+    /* Feedback de click físico presionado */
+    .bookmark-item:active {
+        transform: scale(0.95) !important;
+    }
+
+    /* Forzar contenedor base */
+    #zen-appcontent-navbar-container {
+    height: calc(var(--urlbar-min-height) + var(--toolbarbutton-outer-padding) * 1.5) !important;
+    overflow: visible !important;
+    position: relative !important;
+    }
+
+    #PersonalToolbar:not([collapsed]):not([customizing]) {
+    position: fixed !important;
+    left: 0 !important;
+    inset-inline-start: 0 !important;
+    right: 0 !important;
+    inset-inline-end: 0 !important;
+    transform: none !important;
+    margin: 0 !important;
+    margin-inline: auto !important;
+
+    top: var(--floating-bookmarks-top) !important;
+    width: fit-content !important;
+    min-width: 0 !important;
+    max-width: var(--floating-bookmarks-max-width) !important;
+    padding-inline: clamp(8px, 1.2vw, 14px) !important;
+
+    /* DISEÑO BASE PREMIUM */
+    background: rgba(20, 20, 25, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    outline: 0.5px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+    overflow: visible !important;
+    z-index: 999999 !important;
+    pointer-events: auto !important;
+
+    /* ARQUITECTURA DE TRANSICIÓN ASIMÉTRICA */
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 100ms ease-in-out, visibility 0s linear 250ms !important;
+    }
+
+    #zen-appcontent-navbar-container:hover #PersonalToolbar:not([collapsed]),
+    #nav-bar:focus-within + #PersonalToolbar:not([collapsed]),
+    #PersonalToolbar:not([collapsed]):not([customizing]) {
+    transform: none !important;
+    margin-bottom: 0 !important;
+    }
+
+    /* ==========================================================================
+     * ESTADOS DE EXHIBICIÓN ENTRADA (INSTANTÁNEA)
+     * ========================================================================== */
+
+    #nav-bar:focus-within + #PersonalToolbar:not([collapsed]),
+    #PersonalToolbar:focus-within,
+    #PersonalToolbar:active,
+    #PersonalToolbar:has(.bookmark-item:active),
+    #PersonalToolbar:has([open="true"]),
+    #PersonalToolbar:has(.bookmark-item[open="true"]),
+    #PersonalToolbar:has(menupopup[open="true"]) {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none !important;
+    }
+
+    &[zen-has-bookmarks="true"] {
+        --zen-toolbar-height-with-bookmarks: var(--zen-toolbar-height) !important;
+    }
+
+
+    /* ==========================================================================
+     * FEATURE — CORTINA DE ENFOQUE SUAVE (ELEGANT CINEMATIC VIGNETTE — DARK EDITION)
+     * ========================================================================== */
+
+    #zen-tabbox-wrapper {
+    position: relative !important;
+    }
+
+    #zen-tabbox-wrapper::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+
+    background: transparent !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+
+    transition: opacity 250ms ease-in-out !important;
+    z-index: 99999 !important;
+    }
+
+    /* DISPARADORES ACTIVOS */
+    #main-window:has(#urlbar[zen-floating-urlbar]) #zen-tabbox-wrapper::after,
+    #main-window:has(#urlbar[focused="true"]) #zen-tabbox-wrapper::after,
+    #main-window:has(#navigator-toolbox:focus-within) #zen-tabbox-wrapper::after,
+    #main-window:has(#PersonalToolbar:focus-within) #zen-tabbox-wrapper::after,
+    #main-window:has([open="true"]) #zen-tabbox-wrapper::after,
+    #main-window:has(.bookmark-item[open="true"]) #zen-tabbox-wrapper::after,
+    #main-window:has(menupopup[open="true"]) #zen-tabbox-wrapper::after {
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-image: radial-gradient(ellipse at 50% 35%, rgba(12, 12, 16, 0.52) 0%, rgba(4, 4, 6, 0.88) 100%) !important;
+    }
+    /* ==========================================================================
+     * FEATURE — FINDBAR MINIMALISTA FLOTANTE (REDISEÑO FIEL DE ALTA FIDELIDAD)
+     * ========================================================================== */
+
+    :root {
+        --better-findbar-background-color: rgba(20, 20, 25, 0.85);
+        --better-findbar-text-color: #f0f0f4;
+        --better-findbar-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Ocultar elementos innecesarios */
+    findbar .findbar-highlight,
+    findbar checkbox.findbar-highlight,
+    findbar .findbar-case-sensitive,
+    findbar checkbox.findbar-case-sensitive,
+    findbar .findbar-match-diacritics,
+    findbar checkbox.findbar-match-diacritics,
+    findbar .findbar-find-status {
+        display: none !important;
+    }
+
+    /* Contenedor Principal Flotante (Arriba a la Derecha Permanente) */
+    findbar {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        border-radius: var(--zen-border-radius) !important;
+        margin: 0px !important;
+        padding: 8px 14px !important;
+
+        /* Dimensiones estables para albergar todo en una sola línea */
+        width: max-content !important;
+        min-width: 480px !important;
+        max-width: 600px !important;
+        height: 46px !important; /* Altura fija para evitar saltos de línea */
+
+        position: absolute !important;
+        top: 20px !important;
+        right: 25px !important;
+        bottom: auto !important;
+        left: auto !important;
+
+        /* Estilo Liquid Glass unificado */
+        background: var(--better-findbar-background-color) !important;
+        color: var(--better-findbar-text-color) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        outline: 0.5px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: var(--better-findbar-box-shadow) !important;
+
+        /* --- CONFIGURACIÓN DE ANIMACIÓN INSTANTÁNEA --- */
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        z-index: 999999 !important;
+    }
+
+    /* Forzar flex en una sola línea continua */
+    findbar .findbar-container {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important; /* Clave: impide que Whole Words caiga abajo */
+        gap: 12px !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: visible !important;
+    }
+
+    /* Caja de Entrada de Texto (Input) */
+    findbar .findbar-textbox {
+        flex-grow: 1 !important;
+        max-width: 220px !important;
+        background: rgba(0, 0, 0, 0.25) !important;
+        color: var(--better-findbar-text-color) !important;
+        border-radius: 8px !important;
+        padding: 5px 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    }
+
+    findbar .findbar-textbox:focus {
+        outline: none !important;
+        border-color: rgba(255, 255, 255, 0.35) !important;
+    }
+
+    /* Estado de error */
+    findbar .findbar-textbox[status="notfound"] {
+        background-color: rgba(232, 5, 56, 0.25) !important;
+        border-color: rgba(232, 5, 56, 0.6) !important;
+    }
+
+    /* Texto contador de coincidencias (ej: 1 of 3) */
+    findbar .findbar-label.found-matches {
+        background: transparent !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-size: 12px !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+    }
+
+    /* El único Checkbox visible: Whole Words */
+    findbar .findbar-entire-word {
+        display: flex !important;
+        align-items: center !important;
+        color: var(--better-findbar-text-color) !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
+        margin-right: 4px !important;
+    }
+
+    /* Botones de navegación (Flechas arriba y abajo) */
+    findbar .findbar-find-next,
+    findbar .findbar-find-previous {
+        background: transparent !important;
+        border: none !important;
+        fill: currentColor !important;
+        padding: 3px !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+    }
+
+    findbar .findbar-find-next:hover,
+    findbar .findbar-find-previous:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    /* Botón de Cerrar (La X nativa) */
+    findbar .findbar-closebutton {
+        background: transparent !important;
+        border: none !important;
+        padding: 4px !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    findbar .findbar-closebutton:hover {
+        background: rgba(232, 5, 56, 0.2) !important;
+    }
+
+    /* Comportamiento de cierre instantáneo sin transiciones lentas */
+    findbar[hidden] {
+        display: none !important;
+        opacity: 0 !important;
+    }
+    /* ==========================================================================
+     * ZEN BROWSER — FORCE FLAT COLOR THEME (CATPPUCCIN MACCHIATO)
+     * ========================================================================== */
+
+    :root {
+        /* Color de fondo estático principal para toda la interfaz */
+        --zen-colors-theme-background: #24273a !important;
+        --zen-primary-color: #24273a !important;
+
+        /* Forzar paneles laterales y barras fijas al mismo tono Macchiato */
+        --browser-background-color: #24273a !important;
+        --toolbar-background-color: #24273a !important;
+        --zen-sidebar-background: #24273a !important;
+
+        /* Color secundario plano para botones activos o hover (un gris/azul sutil a tono) */
+        --zen-colors-primary: rgba(255, 255, 255, 0.07) !important;
+        --zen-colors-tertiary: rgba(255, 255, 255, 0.04) !important;
+
+        /* Color del texto e iconos generales para un contraste perfecto */
+        --toolbar-color: #f4f4f7 !important;
+        --zen-colors-theme-text: #f4f4f7 !important;
+
+        /* Desactivar cualquier máscara de degradado nativa que intente aplicar Zen */
+        --zen-element-gradient: none !important;
+        --zen-vertical-gradient: none !important;
+    }
+
+    /* ==========================================================================
+     * FEATURE — SIDEBAR TABS HOVER ANIMATION (STAGGERED)
+     * ========================================================================== */
+
+    #navigator-toolbox .tabbrowser-tab {
+    transition:
+        transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 120ms ease !important;
+    transform-origin: center !important;
+    }
+
+    #navigator-toolbox .tabbrowser-tab:hover {
+    transform: scale(1.3) !important;
+    filter: brightness(1.3) !important;
+    z-index: 1 !important;
+    }
+
+    #navigator-toolbox .tabbrowser-tab:nth-child(1) { transition-delay: 0ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(2) { transition-delay: 15ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(3) { transition-delay: 30ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(4) { transition-delay: 45ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(5) { transition-delay: 60ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(6) { transition-delay: 75ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(7) { transition-delay: 90ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(8) { transition-delay: 105ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(9) { transition-delay: 120ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(10) { transition-delay: 135ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(11) { transition-delay: 150ms !important; }
+    #navigator-toolbox .tabbrowser-tab:nth-child(12) { transition-delay: 165ms !important; }
+
+    /* Forzar el fondo plano en la estructura interna de las pestañas laterales y contenedores */
+    #tabs-newtab-button,
+    #tabbrowser-tabs,
+    #navigator-toolbox,
+    #sidebar-box,
+    .sidebar-panel,
+    #zen-sidebar-webviews {
+    background-color: #24273a !important;
+    background-image: none !important; /* Muta cualquier degradado fantasma */
+    }
+
+    /* ==========================================================================
+     * FEATURE — MACOS-STYLE WINDOW CONTROLS
+     * ========================================================================== */
+
+    .titlebar-buttonbox {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    padding: 4px 8px !important;
+    }
+
+    .titlebar-buttonbox .titlebar-button {
+    appearance: none !important;
+    -moz-appearance: none !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 12px !important;
+    height: 12px !important;
+    min-width: 12px !important;
+    min-height: 12px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    transition: transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    }
+
+    .titlebar-buttonbox .titlebar-button:hover {
+    transform: scale(1.2) !important;
+    }
+
+    .titlebar-buttonbox .titlebar-button .toolbarbutton-icon,
+    .titlebar-buttonbox .titlebar-button .toolbarbutton-text {
+    display: none !important;
+    }
+
+    .titlebar-buttonbox .titlebar-close {
+    background: #ff5f57 !important;
+    }
+
+    .titlebar-buttonbox .titlebar-min {
+    background: #febc2e !important;
+    }
+
+    .titlebar-buttonbox .titlebar-max,
+    .titlebar-buttonbox .titlebar-restore {
+    background: #28c840 !important;
+    }
+
+    :-moz-window-inactive .titlebar-buttonbox .titlebar-button {
+    background: #5c5c5c !important;
+    }
+
+    /* ==========================================================================
+     * FEATURE — MACOS-STYLE BACK/FORWARD ARROWS
+     * ========================================================================== */
+
+    #back-button .toolbarbutton-icon,
+    #forward-button .toolbarbutton-icon {
+    width: 32px !important;
+    height: 32px !important;
+    }
+
+    #back-button,
+    #forward-button {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: background 120ms ease !important;
+    }
+
+    #back-button:hover,
+    #forward-button:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    #back-button:active,
+    #forward-button:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    #forward-button[disabled] {
+    opacity: 0.35 !important;
+    }
+
+    #back-button {
+    list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 18l-8-6 8-6' fill='none' stroke='%23f4f4f7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    }
+
+    #forward-button {
+    list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 18l8-6-8-6' fill='none' stroke='%23f4f4f7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    }
+}
