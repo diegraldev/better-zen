@@ -5,7 +5,6 @@
 @-moz-document url-prefix("chrome:") {
 
     :root {
-    --floating-urlbar-width: clamp(300px, 44vw, 640px);
     --floating-bookmarks-top: clamp(140px, 30vh, 320px);
     --floating-bookmarks-height: 36px;
     --floating-stack-gap: clamp(0px, 0.1vh, 2px);
@@ -30,16 +29,11 @@
     margin-bottom: 0 !important;
     margin-inline: 0 !important;
     width: min(44vw, 640px, calc(100vw - 32px)) !important;
-    max-width: min(44vw, 640px, calc(100vw - 32px)) !important;
     display: block !important;
     padding-inline: 0 !important;
     box-sizing: border-box !important;
     min-width: 300px !important;
     z-index: 999999 !important;
-    }
-
-    :root:has(#urlbar[zen-floating-urlbar]) {
-    --urlbar-margin-inline: 0px !important;
     }
 
     #main-window:has(#urlbar[zen-floating-urlbar]) #zen-appcontent-wrapper,
@@ -61,10 +55,8 @@
     min-width: 50px !important;
     }
 
-    #urlbar[zen-floating-urlbar] > #urlbar-background,
     #urlbar[zen-floating-urlbar] > .urlbar-background,
     #urlbar[zen-floating-urlbar] > .urlbar-input-container,
-    #urlbar[focused="true"] > #urlbar-background,
     #urlbar[focused="true"] > .urlbar-background,
     #urlbar[focused="true"] > .urlbar-input-container {
     width: 100% !important;
@@ -75,7 +67,7 @@
     /* --- BARRA DE URL FLOTANTE: TRANSPARENCIA --- */
     #urlbar[zen-floating-urlbar] .urlbar-background,
     #urlbar[focused="true"] .urlbar-background {
-    background-color: rgba(20, 20, 25, 0.85) !important;
+    background-color: rgba(32, 35, 38, 0.85) !important;
     backdrop-filter: blur(20px) !important;
     border-radius: 14px !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -121,7 +113,6 @@
 
     /* ELIMINACIÓN TOTAL DEL CHEVRON (La flecha del bug ">>") */
     #PlacesChevron,
-    #PersonalToolbar #PlacesChevron,
     .chevron,
     #PlacesToolbarItems + label {
     display: none !important;
@@ -197,7 +188,7 @@
     padding-inline: clamp(8px, 1.2vw, 14px) !important;
 
     /* DISEÑO BASE PREMIUM */
-    background: rgba(20, 20, 25, 0.85) !important;
+    background: rgba(32, 35, 38, 0.85) !important;
     backdrop-filter: blur(20px) !important;
     border-radius: 14px !important;
     border: 1px solid rgba(255, 255, 255, 0.22) !important;
@@ -211,13 +202,6 @@
     opacity: 0 !important;
     visibility: hidden !important;
     transition: opacity 100ms ease-in-out, visibility 0s linear 250ms !important;
-    }
-
-    #zen-appcontent-navbar-container:hover #PersonalToolbar:not([collapsed]),
-    #nav-bar:focus-within + #PersonalToolbar:not([collapsed]),
-    #PersonalToolbar:not([collapsed]):not([customizing]) {
-    transform: none !important;
-    margin-bottom: 0 !important;
     }
 
     /* ==========================================================================
@@ -235,11 +219,6 @@
     visibility: visible !important;
     transition: none !important;
     }
-
-    &[zen-has-bookmarks="true"] {
-        --zen-toolbar-height-with-bookmarks: var(--zen-toolbar-height) !important;
-    }
-
 
     /* ==========================================================================
      * FEATURE — CORTINA DE ENFOQUE SUAVE (ELEGANT CINEMATIC VIGNETTE — DARK EDITION)
@@ -278,221 +257,6 @@
     visibility: visible !important;
     background-image: radial-gradient(ellipse at 50% 35%, rgba(12, 12, 16, 0.52) 0%, rgba(4, 4, 6, 0.88) 100%) !important;
     }
-    /* ==========================================================================
-     * FEATURE — FINDBAR MINIMALISTA FLOTANTE (REDISEÑO FIEL DE ALTA FIDELIDAD)
-     * ========================================================================== */
-
-    :root {
-        --better-findbar-background-color: rgba(20, 20, 25, 0.85);
-        --better-findbar-text-color: #f0f0f4;
-        --better-findbar-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    }
-
-    /* Ocultar elementos innecesarios */
-    findbar .findbar-highlight,
-    findbar checkbox.findbar-highlight,
-    findbar .findbar-case-sensitive,
-    findbar checkbox.findbar-case-sensitive,
-    findbar .findbar-match-diacritics,
-    findbar checkbox.findbar-match-diacritics,
-    findbar .findbar-find-status {
-        display: none !important;
-    }
-
-    /* Contenedor Principal Flotante (Arriba a la Derecha Permanente) */
-    findbar {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        border-radius: var(--zen-border-radius) !important;
-        margin: 0px !important;
-        padding: 8px 14px !important;
-
-        /* Dimensiones estables para albergar todo en una sola línea */
-        width: max-content !important;
-        min-width: 480px !important;
-        max-width: 600px !important;
-        height: 46px !important; /* Altura fija para evitar saltos de línea */
-
-        position: absolute !important;
-        top: 20px !important;
-        right: 25px !important;
-        bottom: auto !important;
-        left: auto !important;
-
-        /* Estilo Liquid Glass unificado */
-        background: var(--better-findbar-background-color) !important;
-        color: var(--better-findbar-text-color) !important;
-        backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.18) !important;
-        outline: 0.5px solid rgba(255, 255, 255, 0.05) !important;
-        box-shadow: var(--better-findbar-box-shadow) !important;
-
-        /* --- CONFIGURACIÓN DE ANIMACIÓN INSTANTÁNEA --- */
-        transition: none !important;
-        transform: none !important;
-        opacity: 1 !important;
-        z-index: 999999 !important;
-    }
-
-    /* Forzar flex en una sola línea continua */
-    findbar .findbar-container {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        flex-wrap: nowrap !important; /* Clave: impide que Whole Words caiga abajo */
-        gap: 12px !important;
-        width: 100% !important;
-        height: 100% !important;
-        overflow: visible !important;
-    }
-
-    /* Caja de Entrada de Texto (Input) */
-    findbar .findbar-textbox {
-        flex-grow: 1 !important;
-        max-width: 220px !important;
-        background: rgba(0, 0, 0, 0.25) !important;
-        color: var(--better-findbar-text-color) !important;
-        border-radius: 8px !important;
-        padding: 5px 10px !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    }
-
-    findbar .findbar-textbox:focus {
-        outline: none !important;
-        border-color: rgba(255, 255, 255, 0.35) !important;
-    }
-
-    /* Estado de error */
-    findbar .findbar-textbox[status="notfound"] {
-        background-color: rgba(232, 5, 56, 0.25) !important;
-        border-color: rgba(232, 5, 56, 0.6) !important;
-    }
-
-    /* Texto contador de coincidencias (ej: 1 of 3) */
-    findbar .findbar-label.found-matches {
-        background: transparent !important;
-        color: rgba(255, 255, 255, 0.5) !important;
-        font-size: 12px !important;
-        margin: 0 !important;
-        white-space: nowrap !important;
-    }
-
-    /* El único Checkbox visible: Whole Words */
-    findbar .findbar-entire-word {
-        display: flex !important;
-        align-items: center !important;
-        color: var(--better-findbar-text-color) !important;
-        white-space: nowrap !important;
-        cursor: pointer !important;
-        margin-right: 4px !important;
-    }
-
-    /* Botones de navegación (Flechas arriba y abajo) */
-    findbar .findbar-find-next,
-    findbar .findbar-find-previous {
-        background: transparent !important;
-        border: none !important;
-        fill: currentColor !important;
-        padding: 3px !important;
-        border-radius: 6px !important;
-        cursor: pointer !important;
-    }
-
-    findbar .findbar-find-next:hover,
-    findbar .findbar-find-previous:hover {
-        background: rgba(255, 255, 255, 0.1) !important;
-    }
-
-    /* Botón de Cerrar (La X nativa) */
-    findbar .findbar-closebutton {
-        background: transparent !important;
-        border: none !important;
-        padding: 4px !important;
-        border-radius: 6px !important;
-        cursor: pointer !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    findbar .findbar-closebutton:hover {
-        background: rgba(232, 5, 56, 0.2) !important;
-    }
-
-    /* Comportamiento de cierre instantáneo sin transiciones lentas */
-    findbar[hidden] {
-        display: none !important;
-        opacity: 0 !important;
-    }
-    /* ==========================================================================
-     * ZEN BROWSER — FORCE FLAT COLOR THEME (CATPPUCCIN MACCHIATO)
-     * ========================================================================== */
-
-    :root {
-        /* Color de fondo estático principal para toda la interfaz */
-        --zen-colors-theme-background: #24273a !important;
-        --zen-primary-color: #24273a !important;
-
-        /* Forzar paneles laterales y barras fijas al mismo tono Macchiato */
-        --browser-background-color: #24273a !important;
-        --toolbar-background-color: #24273a !important;
-        --zen-sidebar-background: #24273a !important;
-
-        /* Color secundario plano para botones activos o hover (un gris/azul sutil a tono) */
-        --zen-colors-primary: rgba(255, 255, 255, 0.07) !important;
-        --zen-colors-tertiary: rgba(255, 255, 255, 0.04) !important;
-
-        /* Color del texto e iconos generales para un contraste perfecto */
-        --toolbar-color: #f4f4f7 !important;
-        --zen-colors-theme-text: #f4f4f7 !important;
-
-        /* Desactivar cualquier máscara de degradado nativa que intente aplicar Zen */
-        --zen-element-gradient: none !important;
-        --zen-vertical-gradient: none !important;
-    }
-
-    /* ==========================================================================
-     * FEATURE — SIDEBAR TABS HOVER ANIMATION (STAGGERED)
-     * ========================================================================== */
-
-    #navigator-toolbox .tabbrowser-tab {
-    transition:
-        transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1),
-        filter 120ms ease !important;
-    transform-origin: center !important;
-    }
-
-    #navigator-toolbox .tabbrowser-tab:hover {
-    transform: scale(1.3) !important;
-    filter: brightness(1.3) !important;
-    z-index: 1 !important;
-    }
-
-    #navigator-toolbox .tabbrowser-tab:nth-child(1) { transition-delay: 0ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(2) { transition-delay: 15ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(3) { transition-delay: 30ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(4) { transition-delay: 45ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(5) { transition-delay: 60ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(6) { transition-delay: 75ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(7) { transition-delay: 90ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(8) { transition-delay: 105ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(9) { transition-delay: 120ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(10) { transition-delay: 135ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(11) { transition-delay: 150ms !important; }
-    #navigator-toolbox .tabbrowser-tab:nth-child(12) { transition-delay: 165ms !important; }
-
-    /* Forzar el fondo plano en la estructura interna de las pestañas laterales y contenedores */
-    #tabs-newtab-button,
-    #tabbrowser-tabs,
-    #navigator-toolbox,
-    #sidebar-box,
-    .sidebar-panel,
-    #zen-sidebar-webviews {
-    background-color: #24273a !important;
-    background-image: none !important; /* Muta cualquier degradado fantasma */
-    }
-
     /* ==========================================================================
      * FEATURE — MACOS-STYLE WINDOW CONTROLS
      * ========================================================================== */
@@ -587,5 +351,200 @@
 
     #forward-button {
     list-style-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 18l8-6-8-6' fill='none' stroke='%23f4f4f7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    }
+
+    /* ==========================================================================
+     * SIDEBAR COMPACTO — OCULTAR SEPARADOR + BOTÓN "CLEAR"
+     * (Close all unpinned tabs): el separador es la línea blanca horizontal
+     * que aparece arriba del todo del sidebar cuando no hay pestañas fijadas.
+     * ========================================================================== */
+
+    .pinned-tabs-container-separator {
+    display: none !important;
+    }
+
+    .zen-workspace-close-unpinned-tabs-button {
+    display: none !important;
+    }
+
+    /* ==========================================================================
+     * SIDEBAR COMPACTO — ANCLADO A LA IZQUIERDA Y ABAJO (SIN FLOTAR)
+     * ========================================================================== */
+
+    /* Valores CONSTANTES (colapsado y expandido): sin padding interno izquierdo
+       ni desfase vertical, para que al hacer hover solo se deslice la X y no
+       "salte" la posición (sin correcciones de margen al transicionar). */
+    #main-window[zen-compact-mode='true']:not([customizing]):not([inDOMFullscreen='true']):not([zen-compact-animating]) #navigator-toolbox:not([animate='true']) {
+    bottom: 0 !important;
+    padding-inline-start: 0 !important;
+    }
+
+    #main-window[zen-compact-mode='true'][zen-right-side='true']:not([customizing]):not([inDOMFullscreen='true']):not([zen-compact-animating]) #navigator-toolbox:not([animate='true']) {
+    bottom: 0 !important;
+    padding-inline-end: 0 !important;
+    }
+
+    /* Estado expandido (hover/activado): pegado al borde izquierdo.
+       Tambien se reemplaza el easing de Zen (--zen-compact-mode-func), que hace
+       overshoot (linear() con valores >1), para eliminar el efecto de rebote. */
+    #main-window[zen-compact-mode='true']:not([customizing]):not([inDOMFullscreen='true']):not([zen-compact-animating]) #navigator-toolbox:is(
+        [zen-has-hover], [zen-user-show], [zen-has-empty-tab], [flash-popup],
+        [has-popup-menu], [movingtab], [zen-compact-mode-active]
+    ):not([animate='true']) {
+    left: 0 !important;
+    right: auto !important;
+    --zen-compact-mode-func: cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    /* Variante sidebar a la derecha */
+    #main-window[zen-compact-mode='true'][zen-right-side='true']:not([customizing]):not([inDOMFullscreen='true']):not([zen-compact-animating]) #navigator-toolbox:is(
+        [zen-has-hover], [zen-user-show], [zen-has-empty-tab], [flash-popup],
+        [has-popup-menu], [movingtab], [zen-compact-mode-active]
+    ):not([animate='true']) {
+    right: 0 !important;
+    left: auto !important;
+    --zen-compact-mode-func: cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    /* Quitar look de "card flotante": esquinas redondeadas y sombra */
+    #main-window[zen-compact-mode='true']:not([customizing]):not([inDOMFullscreen='true']) #navigator-toolbox:not([animate='true']) .zen-toolbar-background {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    }
+
+    /* Eliminar los finos bordes claros del sidebar en modo compacto */
+    #main-window[zen-compact-mode='true'] #navigator-toolbox .zen-toolbar-background::before,
+    #main-window[zen-compact-mode='true'] #navigator-toolbox .zen-toolbar-background::after {
+    outline: none !important;
+    }
+
+    /* ==========================================================================
+     * TABS — SIN BOTÓN DE CERRAR (X) EN LAS PESTAÑAS
+     * ========================================================================== */
+
+    .tab-close-button {
+    display: none !important;
+    }
+
+    /* ==========================================================================
+     * STATUS BAR — OCULTAR EL PANEL DE ESTADO (URL de enlaces en hover)
+     * ========================================================================== */
+
+    #statuspanel {
+    display: none !important;
+    }
+
+    /* ==========================================================================
+     * AUDIO INDICATOR — ESTÁTICO (círculo) + HOVER SCALE + ICONOS DE FIREFOX
+     * Basado en el mod "Audio Indicator Enhanced" de @Kaedriz (modo legacy).
+     * Implementado directamente aquí (el mod Zen está deshabilitado).
+     * ========================================================================== */
+
+    /* Eliminar el botón nativo de audio de Zen */
+    .tab-audio-button {
+    display: none !important;
+    }
+
+    /* Indicador circular estático (reemplaza el indicador nuevo de Zen) */
+    #tabbrowser-tabs[orient="vertical"]
+        .tabbrowser-tab:not([zen-glance-tab])
+        > .tab-stack
+        > .tab-content
+        > .tab-icon-stack
+        > .tab-icon-overlay:not([crashed]) {
+        &:is([soundplaying], [muted], [activemedia-blocked]) {
+        display: flex !important;
+        background-color: #161717 !important;
+        border: 1px solid #ffffff29 !important;
+        transition: transform 100ms ease-in-out,
+            background-color 100ms ease-in-out;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+
+        /* Increase indicator size on hover */
+        &:hover {
+            transition: transform 100ms ease-in-out,
+                background-color 100ms ease-in-out !important;
+            transform: scale(1.3) translate(-8%, 14%);
+            transform-origin: center !important;
+        }
+        }
+
+        /* Bring back default Firefox icons */
+        &[soundplaying] {
+        background-image: url("chrome://browser/skin/tabbrowser/tab-audio-playing-small.svg") !important;
+        }
+
+        &[muted] {
+        background-color: rgb(122, 31, 31) !important;
+        background-image: url("chrome://browser/skin/tabbrowser/tab-audio-muted-small.svg") !important;
+        }
+
+        &[activemedia-blocked] {
+        background-image: url("chrome://browser/skin/tabbrowser/tab-audio-blocked-small.svg") !important;
+        }
+
+        &[muted],
+        &[soundplaying],
+        &[activemedia-blocked] {
+        list-style-image: none !important;
+        }
+    }
+
+    /* ==========================================================================
+     * URLBAR — OCULTAR NOMBRES DE EXTENSIONES Y DE PÁGINAS INTERNAS (p. ej. "Zen")
+     * ========================================================================== */
+
+    /* Oculta el nombre de la extensión en la barra de URL */
+    #urlbar #identity-box.extensionPage #identity-icon-label {
+    display: none !important;
+    }
+
+    /* Oculta la etiqueta en páginas internas de Zen (configuración "Zen", about:*, etc.).
+       Zen solo la oculta si pageproxystate no es "invalid"; aquí la ocultamos siempre. */
+    #urlbar #identity-box.chromeUI #identity-icon-label {
+    display: none !important;
+    }
+
+    /* ==========================================================================
+     * URLBAR — OCULTAR RESULTADOS E IVAON NoTopSites "Hide all" (sin mod)
+     * ========================================================================== */
+
+    /* Oculta todo el panel de resultados al abrir la barra sin tipear/buscar */
+    #urlbar:not([usertyping], [searchmode]) > .urlbarView {
+    display: none !important;
+    }
+
+    /* Oculta las filas de "top sites" (sitios frecuentes del nuevo/URL bar) */
+    #urlbar-results div.urlbarView-row[row-selectable][type="top_site"] {
+    display: none !important;
+    }
+
+    /* ==========================================================================
+     * SPLIT VIEW — BORDE EN LA PESTAÑA ACTIVA DEL PANEL DIVIDIDO
+     * ========================================================================== */
+
+    #tabbrowser-tabpanels[zen-split-view="true"] .browserSidebarContainer.deck-selected {
+    outline: var(--zen-colors-border) !important;
+    }
+
+    /* ==========================================================================
+     * APP MENU — OCULTAR EL BOTÓN DE MENÚ (los tres puntos) DE LA BARRA
+     * ========================================================================== */
+
+    #PanelUI-menu-button {
+    display: none !important;
+    }
+
+    /* ==========================================================================
+     * BLANK WINDOW (UNSYNCED) — MISMO TEMA QUE LA VENTANA PRINCIPAL
+     * Zen fuerza un tema azul/púrpura hardcodeado en las "New Blank Window";
+     * esto lo reemplaza por el color personalizado único del usuario (#202326).
+     * ========================================================================== */
+
+    :root[zen-unsynced-window='true'] {
+    --zen-main-browser-background: #202326 !important;
+    --zen-primary-color: #202326 !important;
+    --toolbox-textcolor: #ffffff !important;
     }
 }
