@@ -554,4 +554,88 @@
     --zen-primary-color: #202326 !important;
     --toolbox-textcolor: #ffffff !important;
     }
+
+    /* ==========================================================================
+     * CONTEXT MENU — SIN SEPARADORES + COLOR DE TEMA
+     * Mismo lenguaje visual que la barra flotante: fondo #202326 translúcido con
+     * blur, borde suave, hover a rgba(255,255,255,0.1) y radios de 8/12px.
+     * ========================================================================== */
+
+    /* El bloque visible del menú es panel::part(content), controlado por las
+       variables --panel-*: fondo, borde, radio y sombra se dibujan AHÍ. */
+    panel[type="menu"],
+    menupopup {
+    --panel-background-color: #202326 !important;
+    --panel-text-color: #f4f4f7 !important;
+    --panel-border-color: transparent !important;
+    --panel-border-radius: 12px !important;
+    --panel-box-shadow-margin: 0px !important;
+    --panel-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+    background-color: transparent !important;
+    }
+
+    /* Eliminar todos los separadores */
+    menuseparator {
+    display: none !important;
+    }
+
+    /* Eliminar la fila de navegación (atrás/adelante/recargar/guardar marcador) */
+    #context-navigation,
+    #context-sep-navigation {
+    display: none !important;
+    }
+
+    /* Elementos poco usados: ver fuente, inspeccionar, a11y y enviar a dispositivo */
+    #context-viewsource,
+    #context-viewpartialsource-selection,
+    #context-inspect,
+    #context-inspect-a11y,
+    #context-sendpagetodevice {
+    display: none !important;
+    }
+
+    /* Enlaces: abrir en contenedor, guardar como, glance, marcador y enviar */
+    #context-openlinkincontainertab,
+    #context-openlinkinusercontext-menu,
+    #context-openlinkintab,
+    #context-savelink,
+    #context-zenOpenLinkInGlance,
+    #context-bookmarklink,
+    #context-sendlinktodevice {
+    display: none !important;
+    }
+
+    /* Traducir (selección y enlace comparten id) y email de imágenes */
+    #context-translate-selection,
+    #context-sendimage {
+    display: none !important;
+    }
+
+    /* Compactar el espaciado interno de cada elemento */
+    menupopup > .paneltooltip-innerbox,
+    menupopup menu,
+    menupopup menuitem {
+    padding-block: 4px !important;
+    }
+
+    /* Altura mínima reducida para un menú más compacto */
+    menupopup menu,
+    menupopup menuitem {
+    min-height: 24px !important;
+    }
+
+    /* Hover de los elementos del menú (usa colores de sistema; los forzamos) */
+    menu[_moz-menuactive]:not([disabled]),
+    menuitem[_moz-menuactive]:not([disabled]) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f4f4f7 !important;
+    border-radius: 12px !important;
+    margin-inline: 4px !important;
+    padding-inline: 8px !important;
+    }
+
+    /* Texto atenuado de los submenús (sin hover) hereda el color base */
+    menuitem[disabled="true"] {
+    opacity: 0.4 !important;
+    }
 }
