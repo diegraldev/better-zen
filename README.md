@@ -1,121 +1,140 @@
-# Better Zen Browser ✨
+# Better Zen 🌀
+
+> A curated, glassmorphic **userChrome.css** configuration for **Zen Browser**.
+> Floating URL bar, floating bookmarks bar, macOS-style window controls and a
+> cohesive flat dark theme built around the single accent color `#202326`.
 
 [![Zen Browser](https://img.shields.io/badge/Zen%20Browser-1.8%2B-ff5f57?style=flat-square&logo=firefox&logoColor=white)](https://zen-browser.app)
-[![Catppuccin](https://img.shields.io/badge/Catppuccin-Macchiato-f4f4f7?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNOCAxYy0zLjkgMC03IDMuMS03IDdzMy4xIDcgNyA3IDctMy4xIDctNy0zLjEtNy03LTd6IiBmaWxsPSIjZjRjYjcwIi8+PC9zdmc+&labelColor=24273a)](https://catppuccin.com)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
-[![GitHub](https://img.shields.io/badge/made%20with-%F0%9F%96%A4%20by%20opencode-8a5cf5?style=flat-square)](https://opencode.ai)
-
-> A premium, glassmorphic userChrome.css configuration for **Zen Browser** — featuring a floating URL bar, floating bookmarks bar, macOS-style window controls, and the elegant **Catppuccin Macchiato** color palette.
+[![made with opencode](https://img.shields.io/badge/made%20with-%F0%9F%96%A4%20opencode-8a5cf5?style=flat-square)](https://opencode.ai)
 
 ---
 
-## Showcase 🎬
+## ✨ Features
 
-| State | Preview |
-|-------|---------|
-| **Idle** | Floating bookmarks bar visible, clean glass UI |
-| **Focused** | Floating URL bar + cinematic dark vignette overlay |
-| **Compact** | Buttons collapse, macOS traffic lights stay visible |
+### 🌊 Floating URL Bar
+Centered glass URL bar that floats below the bookmarks bar.
+
+- Fixed position (`position: fixed`), horizontally centered
+- Transparent backdrop with `backdrop-filter: blur(20px)`
+- No native border / shadow — replaced by a subtle rounded card
+- Responsive width `min(44vw, 640px, 100vw - 32px)`, `min-width: 300px`
+- Centered text when idle, left-aligned once focused
+- Stacks automatically below the bookmarks bar via `calc()`
+
+### 📑 Floating Bookmarks Bar
+The bookmarks toolbar is an overlay pill that reveals on interaction.
+
+- Hidden by default (`opacity: 0`), shows on hover / focus / active
+- Centered with `fit-content`, capped at `min(92vw, 760px)`
+- Chevron (`>>`) fully removed — no overflow
+- Items scale to `1.20` + brighten on hover, `0.95` on press
+- Custom `cubic-bezier` easing replaces Zen's bounce
+
+### 🚦 macOS-style Window Controls
+Replaces the window buttons with traffic-light circles.
+
+- Close `#ff5f57` / Minimize `#febc2e` / Maximize `#28c840`
+- `12×12px`, round, scale to `1.2` on hover
+- Grey `#5c5c5c` when the window is inactive
+
+### ◀▶ macOS-style Back/Forward Arrows
+- Custom SVG chevron icons instead of Firefox defaults
+- Transparent hover / press pill backgrounds
+- Disabled forward button dimmed (`opacity: 0.35`)
+
+### 🎭 Cinematic Vignette
+A soft dark radial gradient frames the viewport when the URL bar is focused
+or floating — smooth `250ms` fade, non-interactive.
+
+### 🎚 Compact Sidebar (anchor bottom-left)
+- Sidebar hugs the bottom edge (no floating card, no rounded corners/shadow)
+- No overshoot easing when expanding
+- Zero horizontal padding shift while animating
+- Hides the pinned-tabs separator and the "close unpinned tabs" button
+
+### 🔊 Audio Indicator
+Static circular playback indicator on tabs, with the classic Firefox icons.
+
+- Play / mute / media-blocked states
+- Muted shows a red tint; scales on hover
+- Hides Zen's default audio button
+
+### 🧹 QoL & Cleanup
+- Hides the workspace indicator
+- Hides tab close (`X`) buttons
+- Hides the status bar (hover link) panel
+- Hides extension & internal-page name labels in the URL bar
+- Hides the app menu (three-dot) button
+- Hides URL-bar results & top sites when the bar opens without typing
+- Split-view: outlines the active pane
+
+### 🪟 Consistent Blank Windows
+Makes **New Blank Window** (unsynced) use the same `#202326` theme instead of
+Zen's hard-coded blue/purple override, so all windows look identical.
 
 ---
 
-## Features 🚀
+## 📂 What's what
 
-### Floating URL Bar 🌊
-- Centered, fixed-position URL bar with `backdrop-filter: blur(20px)` glass effect
-- Responsive width: `clamp(300px, 44vw, 640px)`
-- Seamless integration with bookmarks bar (auto-stacking via `calc()`)
-- No toolbar shift on focus (sidebar compensation fix)
-
-### Floating Bookmarks Bar 📑
-- Hover-reveal bookmarks bar with elastic opacity transition
-- Centered with `fit-content` width, capped at `92vw`
-- No chevron overflow — hidden gracefully
-- Bookmark items scale to `1.20` on hover with brightness boost
-
-### Safari / macOS-style Navigation 🎯
-- **Window controls**: Red `#ff5f57` / Yellow `#febc2e` / Green `#28c840` traffic light circles
-- Gray out when window is inactive (`:-moz-window-inactive`)
-- **Back / Forward**: Clean chevron arrows replacing default Firefox icons
-- Subtle circular hover background
-
-### Cinematic Vignette 🎭
-- Radial gradient overlay on the viewport when URL bar is focused or floating
-- Smooth `250ms` opacity transition
-- Enhances focus on the active URL bar
-
-### Sidebar Tab Hover Animation 🎞️
-- Staggered scale (`1.3`) + brightness (`1.3`) animation on tab hover
-- `15ms` delay cascade per tab for a wave-like effect
-
-### Findbar Minimal Redesign 🔍
-- Floating, glass-styled findbar positioned top-right
-- Compact single-line layout — no overflow
-- Instant appearance, no transition lag
-
-### Global Flat Theme 🎨
-- **Catppuccin Macchiato**: `#24273a` base background
-- Uniform coloring across sidebar, toolbar, and web panels
-- Zero gradients — fully flat aesthetic
+| Path | Role |
+|------|------|
+| `userChrome.css` | **Your** custom rules — everything above |
+| `zen-themes.css` | Auto-generated aggregate of installed mods (`about:addons`). **Do not edit by hand.** |
+| `zen-themes/*/` | Per-mod CSS + preferences |
+| `.gitignore` | Keeps only customization files (ignores cache/session) |
 
 ---
 
-## Installation 📦
+## 🚀 Install
 
-1. **Open your Zen Browser profile folder:**
-   - `about:support` → *Profile Folder* → **Open Directory**
-   - Or navigate to: `~/.zen/<profile>/chrome/`
-
-2. **Clone or copy these files:**
+1. Open your Zen profile folder:
+   `about:support` → **Profile Folder** → **Open Directory**.
+2. Put the files in `.../chrome/`:
    ```bash
-   git clone https://github.com/YOUR_USER/YOUR_REPO chrome/
-   # or manually copy userChrome.css, zen-themes.css, zen-themes/
+   git clone https://github.com/diegraldev/better-zen chrome/
    ```
-
-3. **Enable custom stylesheets:**
-   - Go to `about:config`
-   - Set `toolkit.legacyUserProfileCustomizations.stylesheets` → `true`
-
-4. **Restart Zen Browser** — changes apply on next launch.
+3. In `about:config` set:
+   `toolkit.legacyUserProfileCustomizations.stylesheets` → `true`
+4. Restart Zen. Changes apply on next launch.
 
 ---
 
-## Configuration ⚙️
+## ⚙️ Tune it
 
-All customization variables are at the top of `userChrome.css`:
+Sizing lives at the top of `userChrome.css`:
 
 ```css
---floating-urlbar-width: clamp(300px, 44vw, 640px);
---floating-bookmarks-top: clamp(140px, 30vh, 320px);
---floating-bookmarks-height: 36px;
---floating-stack-gap: clamp(0px, 0.1vh, 2px);
+--floating-bookmarks-top: clamp(140px, 30vh, 320px);     /* bookmarks bar top offset */
+--floating-bookmarks-height: 36px;                        /* bookmarks bar height   */
+--floating-stack-gap: clamp(0px, 0.1vh, 2px);             /* gap bookmarks ↔ urlbar */
+--floating-bookmarks-max-width: min(92vw, 760px);         /* bookmarks max width   */
 ```
 
-Tweak these to match your screen size and preference.
+Accent / theme color `#202326` is used across the floating bars and the blank-window
+override — change it in one place to re-tint the whole UI.
+
+> ⚠️ The configuration assumes a **collapsed sidebar (icons only)** and vertical
+> tabs. If you run an expanded sidebar or right-side tabs, some selectors need
+> tuning.
 
 ---
 
-## Compatibility ✅
+## ✅ Compatibility
 
 | Feature | Status |
 |---------|--------|
 | Zen Browser 1.8+ | ✅ |
-| Multiple Toolbars | ✅ |
-| Collapsed Bar | ✅ |
-| Single Toolbar | ⚠️ May need adjustments |
-| Compact Mode | ✅ (sidebar position: fixed) |
-| Vertical Tabs | ✅ |
-| Left Sidebar | ✅ |
+| Vertical tabs | ✅ |
+| Collapsed sidebar | ✅ |
+| Compact mode | ✅ |
+| Left / Right sidebar | ✅ |
 
 ---
 
-## Credits 💝
+## 🧡 Credits
 
-- **[Zen Browser](https://zen-browser.app)** — the most beautiful Firefox fork
-- **[Catppuccin](https://catppuccin.com)** — soothing pastel theme colors
-- **[OpenCode](https://opencode.ai)** — AI coding agent used to craft this config
-
----
-
-> **Note**: This configuration is tailored for a collapsed sidebar with icons only.  
-> If you use an expanded sidebar or right-side tabs, some selectors may need adjustment.
+- **[Zen Browser](https://zen-browser.app)** — the calmer, gorgeous Firefox fork
+- **[Audio Indicator Enhanced](https://github.com/Kaedriz/zen-themes)** — audio indicator reimplemented locally
+- **[No Top Sites / Ivaon](https://github.com/Ivaon/zen-theme)** — URL results hiding reimplemented locally
+- **[OpenCode](https://opencode.ai)** — AI coding agent that crafted this config

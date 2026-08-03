@@ -171,6 +171,13 @@
     position: relative !important;
     }
 
+    /* La barra de marcadores es un overlay flotante, no ocupa los 30px en el toolbar.
+       Sin esto, Zen añade 30px a --zen-toolbar-height-with-bookmarks y empuja el
+       sidebar hacia abajo (no llega arriba). Mantener la altura constante. */
+    :root[zen-has-bookmarks="true"] {
+    --zen-toolbar-height-with-bookmarks: var(--zen-toolbar-height) !important;
+    }
+
     #PersonalToolbar:not([collapsed]):not([customizing]) {
     position: fixed !important;
     left: 0 !important;
