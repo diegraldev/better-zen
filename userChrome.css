@@ -315,6 +315,12 @@
     background: #28c840 !important;
     }
 
+    /* Botón maximizar/restaurar cuando la ventana está maximizada */
+    #main-window[sizemode="maximized"] .titlebar-buttonbox .titlebar-max,
+    #main-window[sizemode="maximized"] .titlebar-buttonbox .titlebar-restore {
+    background: #3FB9A5 !important;
+    }
+
     :-moz-window-inactive .titlebar-buttonbox .titlebar-button {
     background: #5c5c5c !important;
     }

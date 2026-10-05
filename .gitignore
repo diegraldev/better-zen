@@ -5,3 +5,5 @@
 !/zen-themes.css
 !/zen-themes/
 !/zen-themes/**/*
+!/kde-global-menu/
+!/kde-global-menu/**
