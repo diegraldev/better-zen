@@ -642,9 +642,16 @@
      * tapar el badge real mientras la traducción está en curso o terminada.
      * ========================================================================== */
 
+    /* FORZAR VISIBILIDAD Y CLIC */
     #translations-button {
     display: flex !important;
     visibility: visible !important;
+    pointer-events: auto !important;
+    }
+
+    /* Aseguramos que el icono interno también reciba el clic */
+    #translations-button > #translations-button-icon {
+    pointer-events: auto !important;
     }
 
     #translations-button:not([translationsactive]) > #translations-button-circle-arrows,
