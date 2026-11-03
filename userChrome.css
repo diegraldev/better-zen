@@ -268,66 +268,13 @@
      * FEATURE — MACOS-STYLE WINDOW CONTROLS
      * ========================================================================== */
 
-    .titlebar-buttonbox {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 7px !important;
-    padding: 4px 8px !important;
-    }
-
-    .titlebar-buttonbox .titlebar-button {
-    appearance: none !important;
-    -moz-appearance: none !important;
-    border: none !important;
-    border-radius: 50% !important;
-    width: 12px !important;
-    height: 12px !important;
-    min-width: 12px !important;
-    min-height: 12px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    cursor: pointer !important;
-    box-sizing: border-box !important;
-    transition: transform 120ms cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    }
-
-    .titlebar-buttonbox .titlebar-button:hover {
-    transform: scale(1.2) !important;
-    }
-
-    .titlebar-buttonbox .titlebar-button .toolbarbutton-icon,
-    .titlebar-buttonbox .titlebar-button .toolbarbutton-text {
-    display: none !important;
-    }
-
-    .titlebar-buttonbox .titlebar-close {
-    background: #ff5f57 !important;
-    }
-
-    .titlebar-buttonbox .titlebar-min {
-    background: #febc2e !important;
-    }
-
-    .titlebar-buttonbox .titlebar-max,
-    .titlebar-buttonbox .titlebar-restore {
-    background: #28c840 !important;
-    }
-
-    /* Botón maximizar/restaurar cuando la ventana está maximizada */
-    #main-window[sizemode="maximized"] .titlebar-buttonbox .titlebar-max,
-    #main-window[sizemode="maximized"] .titlebar-buttonbox .titlebar-restore {
-    background: #3FB9A5 !important;
-    }
-
-    :-moz-window-inactive .titlebar-buttonbox .titlebar-button {
-    background: #5c5c5c !important;
-    }
-
     /* ==========================================================================
      * FEATURE — MACOS-STYLE BACK/FORWARD ARROWS
      * ========================================================================== */
+
+    .titlebar-buttonbox {
+    display: none !important;
+    }
 
     #back-button .toolbarbutton-icon,
     #forward-button .toolbarbutton-icon {
@@ -381,19 +328,41 @@
     }
 
     /* ==========================================================================
-     * SIDEBAR COMPACTO — ANCLADO A LA IZQUIERDA Y ABAJO (SIN FLOTAR)
+     * SIDEBAR COMPACTO — PEGADO AL BORDE SUPERIOR REAL (SIN HUECO)
+     * --------------------------------------------------------------------------
+     * Zen coloca el sidebar fijo con:
+     *   height: calc(100% - var(--zen-toolbar-height-with-bookmarks));
+     *   margin-top: var(--zen-toolbar-height-with-bookmarks);
+     *
+     * En modo compacto la bookmarks toolbar no se muestra, pero
+     * --zen-toolbar-height-with-bookmarks sí suma sus 30px. Eso desplaza el
+     * sidebar 30px de más y deja ver el contenido de la página por encima.
+     *
+     * Solución: en modo compacto redefinir la variable para que valga solo la
+     * altura real del toolbar (--zen-toolbar-height). Zen recalcula con ella
+     * el top y la altura, y el hover/translate/animaciones siguen intactos.
      * ========================================================================== */
 
-    /* Valores CONSTANTES (colapsado y expandido): sin padding interno izquierdo
-       ni desfase vertical, para que al hacer hover solo se deslice la X y no
-       "salte" la posición (sin correcciones de margen al transicionar). */
-    #main-window[zen-compact-mode='true']:not([customizing]):not([inDOMFullscreen='true']):not([zen-compact-animating]) #navigator-toolbox:not([animate='true']) {
+    /* El arreglo real: en modo compacto la variable debe valer SOLO la altura
+       del toolbar. Zen hace el resto (top, altura y hover) por su cuenta. */
+    #main-window[zen-compact-mode='true'] {
+    --zen-toolbar-height-with-bookmarks: var(--zen-toolbar-height) !important;
+    }
+
+    /* Abajo, Zen deja `bottom: calc(var(--zen-compact-float) / 2)`, que saca
+       el sidebar unos píxeles del borde inferior y deja ver la página (blanco).
+       Lo pegamos al fondo: top = toolbar, bottom = 0. */
+    #main-window[zen-compact-mode='true']:not([zen-single-toolbar='true']):not([customizing]):not([inDOMFullscreen='true']) #navigator-toolbox:not([animate='true']) {
     bottom: 0 !important;
+    }
+
+    /* Valores CONSTANTES (colapsado y expandido): sin padding interno lateral,
+       para que al hacer hover no "salte" la posición. */
+    #main-window[zen-compact-mode='true']:not([customizing]):not([inDOMFullscreen='true']):not([zen-compact-animating]) #navigator-toolbox:not([animate='true']) {
     padding-inline-start: 0 !important;
     }
 
     #main-window[zen-compact-mode='true'][zen-right-side='true']:not([customizing]):not([inDOMFullscreen='true']):not([zen-compact-animating]) #navigator-toolbox:not([animate='true']) {
-    bottom: 0 !important;
     padding-inline-end: 0 !important;
     }
 
@@ -423,6 +392,13 @@
     #main-window[zen-compact-mode='true']:not([customizing]):not([inDOMFullscreen='true']) #navigator-toolbox:not([animate='true']) .zen-toolbar-background {
     border-radius: 0 !important;
     box-shadow: none !important;
+    }
+
+    /* El #titlebar de Zen lleva 4px de margen superior en compact mode
+       (zen.view.compact.hide-tabbar): lo anulamos para que el panel oscuro
+       empiece exactamente donde acaba el toolbar. */
+    #main-window[zen-compact-mode='true'] #navigator-toolbox:not([animate='true']) #titlebar {
+    margin-top: 0 !important;
     }
 
     /* Eliminar los finos bordes claros del sidebar en modo compacto */
@@ -611,8 +587,11 @@
     display: none !important;
     }
 
-    /* Traducir (selección y enlace comparten id) y email de imágenes */
-    #context-translate-selection,
+    /* Email de imágenes.
+       "Traducir selección" (#context-translate-selection) ya NO se oculta:
+       el motor de traducción se reactivó con browser.translations.enable=true
+       en ../../user.js. Ocultarlo aquí era redundante e inútil, ya que con el
+       motor apagado la entrada ni siquiera llegaba a renderizarse. */
     #context-sendimage {
     display: none !important;
     }
@@ -643,5 +622,33 @@
     /* Texto atenuado de los submenús (sin hover) hereda el color base */
     menuitem[disabled="true"] {
     opacity: 0.4 !important;
+    }
+
+    /* ==========================================================================
+     * BOTÓN DE TRADUCIR SIEMPRE VISIBLE EN LA BARRA DE URL
+     * Zen/Firefox solo enseñan #translations-button cuando detectan que la página
+     * entera es traducible (fullPageTranslationsPanel.js:1616). En páginas
+     * casi siempre en tu idioma con un párrafo suelto en inglés no aparece nada.     * Aquí se fuerza visible siempre.
+     *
+     * El botón está cableado aunque esté oculto: navigator-toolbox.js:301 hace
+     * "case "translations-button": FullPageTranslationsPanel.open(event)" dentro
+     * de un addEventListener("click") global, así que al forzar el display el
+     * clic abre el panel de verdad. No hay que tocar JS.
+     *
+     * El icono (#translations-button-icon) trae su list-style-image desde CSS
+     * (urlbar-searchbar.css:1061), así que se ve siempre. En cambio el spinner y
+     * la píldora de idioma solo los oculta el JS cuando la página SÍ es traducible;
+     * sin esto saldrían ambos en blanco. El :not([translationsactive]) evita
+     * tapar el badge real mientras la traducción está en curso o terminada.
+     * ========================================================================== */
+
+    #translations-button {
+    display: flex !important;
+    visibility: visible !important;
+    }
+
+    #translations-button:not([translationsactive]) > #translations-button-circle-arrows,
+    #translations-button:not([translationsactive]) > #translations-button-locale {
+    display: none !important;
     }
 }
