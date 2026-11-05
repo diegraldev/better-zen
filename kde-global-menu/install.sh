@@ -110,7 +110,7 @@ fi
 
 echo ""
 echo "╔══════════════════════════════════════════════════════╗"
-echo "║                   ✅  INSTALADO                      ║"
+echo "║                    INSTALLED                         ║"
 echo "╚══════════════════════════════════════════════════════╝"
 echo ""
 warn "Cierra Zen completamente y vuelve a abrirlo para aplicar los cambios."

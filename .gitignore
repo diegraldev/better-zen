@@ -7,3 +7,7 @@
 !/zen-themes/**/*
 !/kde-global-menu/
 !/kde-global-menu/**
+!/urlbar-domain-only/
+!/urlbar-domain-only/**
+!/VERSION
+!/LICENSE
